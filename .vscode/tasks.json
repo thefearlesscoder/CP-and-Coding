@@ -1,0 +1,42 @@
+// {
+//   "version": "2.0.0",
+//   "tasks": [
+//     {
+//       "label": "build and run C++",
+//       "type": "shell",
+//       "command": "sh",
+//       "args": [
+//         "-c",
+//         "g++ -std=c++14 -I \"${env:HOME}/include\" \"${file}\" -o \"${fileDirname}/${fileBasenameNoExtension}\" && \"${fileDirname}/${fileBasenameNoExtension}\" < input.txt > output.txt"
+//       ],
+//       "group": {
+//         "kind": "build",
+//         "isDefault": true
+//       },
+//       "problemMatcher": ["$gcc"],
+//       "detail": "Compile and run C++ with custom include, input.txt, and output.txt"
+//     }
+//   ]
+// }
+
+
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build and run C++ with timeout",
+      "type": "shell",
+      "command": "sh",
+      "args": [
+        "-c",
+        "g++ -std=c++14 -I \"${env:HOME}/include\" \"${file}\" -o \"${fileDirname}/${fileBasenameNoExtension}\" && timeout 5s \"${fileDirname}/${fileBasenameNoExtension}\" < input.txt > output.txt || { if [ $? -eq 124 ]; then echo 'TLE'; fi; }"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": ["$gcc"],
+      "detail": "Compile and run C++ with timeout (5s), input/output redirection, and TLE handling"
+    }
+  ]
+}
