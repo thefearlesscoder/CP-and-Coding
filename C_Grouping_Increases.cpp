@@ -17,10 +17,29 @@ using namespace std;
 //RATING IS SHIT, YOU ARE HERE JUST FOR FUN!, RATING MAY DECREASES BUT NOT THE EXPERIENCE.
 //NEVER SUBMIT A DUMB CODE! YOU DO EVERYTIME REMIND IT!
 //SEE EDGE CASES SPECIALLY (0 & 1)
-
 void vivek()
 {   
-    
+    int n, k;
+    cin >> n >> k;
+    vector<vector<int>> a(30, vector<int>(k, 0));
+    for(int i = 0;i<30;i++){
+        if(n & (1 << i)){ // odd one's
+            for(int j = k;j<k;j++){
+                a[i][j] = 1;
+            }
+            if(k%2 == 0){
+                a[i][k-1] = 0;
+            }
+        }
+    }
+    for(int i = 0;i<k;i++){
+        int val = 0;
+        for(int j = 0;j<30;j++){
+            val += (a[j][i] << j);
+        }
+        cout<<val<<" ";
+    }
+    NL
 }
 
 signed main()
