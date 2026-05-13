@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+#include<iostream>
 #include <climits>
 
 #define int long long int
@@ -35,12 +36,12 @@ void vivek(){
     vector<int> dp(n+1, -1);
     int ans = solve(0, a, dp);
 
-    cout << ans << endl;
+    cout << ans << "\n";
 }
 
 signed main(){
     ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
+    std::cin.tie(NULL);
 
     int t;
     cin >> t;
