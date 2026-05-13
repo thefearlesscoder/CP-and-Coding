@@ -29,7 +29,7 @@
       "command": "sh",
       "args": [
         "-c",
-        "g++ -std=c++14 -I \"${env:HOME}/include\" \"${file}\" -o \"${fileDirname}/${fileBasenameNoExtension}\" && timeout 5s \"${fileDirname}/${fileBasenameNoExtension}\" < input.txt > output.txt || { if [ $? -eq 124 ]; then echo 'TLE'; fi; }"
+        "g++-15 -std=c++17 -I \"${env:HOME}/include\" \"${file}\" -o \"${fileDirname}/${fileBasenameNoExtension}\" && timeout 5s \"${fileDirname}/${fileBasenameNoExtension}\" < input.txt > output.txt || { if [ $? -eq 124 ]; then echo 'TLE'; fi; }"
       ],
       "group": {
         "kind": "build",

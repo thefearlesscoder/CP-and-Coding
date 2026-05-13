@@ -20,6 +20,13 @@ using namespace std;
 
 void vivek()
 {   
+    int n;
+    cin >> n;
+    vector<int> a(n);
+    loop1(i, n){
+        cin >> a[i];
+    }
+
     
 }
 
