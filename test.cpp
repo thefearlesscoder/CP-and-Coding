@@ -1,53 +1,41 @@
 #include <bits/stdc++.h>
-#include <climits>
-
 #define int long long int
-
+#define no cout<<"NO"<<endl;
+#define yes cout<<"YES"<<endl;
+#define Sort(v) sort(v.begin(), v.end())
+#define Sortr(v) sort(v.rbegin(), v.rend())
+#define vecpair vector<pair<int, int>> 
+#define loop1(i,n) for(int i=0;i<n;i++)
+#define loop2(i,n) for(int i=1;i<=n;i++)
+#define print1(x) cout<<x<<endl;
+#define print2(x) cout<<x<<" ";
+#define NL cout<<"\n";
+#define umap unordered_map
+#define all(v) v.begin(), v.end()
 using namespace std;
 
-int solve(int idx, vector<int> &a, vector<int> &dp){
-    int n = a.size();
+//RATING IS SHIT, YOU ARE HERE JUST FOR FUN!, RATING MAY DECREASES BUT NOT THE EXPERIENCE.
+//NEVER SUBMIT A DUMB CODE! YOU DO EVERYTIME REMIND IT!
+//SEE EDGE CASES SPECIALLY (0 & 1)
 
-    if(idx >= n) return 0;
-
-    if(dp[idx]  != -1) return dp[idx];
-
-    int take = LLONG_MAX;
-    
-    int not_take = 1 + solve(idx + 1, a, dp);
-
-    if(idx + a[idx] + 1 <= n){
-        take = solve(idx + a[idx] + 1, a, dp);
-    }
-
-    return dp[idx] = min(take, not_take);
-}
-
-void vivek(){   
+void vivek()
+{   
     int n;
     cin >> n;
-
-    vector<int> a(n);
-
-    for(int i = 0; i < n; i++){
-        cin >> a[i];
-    }
-    vector<int> dp(n+1, -1);
-    int ans = solve(0, a, dp);
-
-    cout << ans << endl;
+    
 }
 
-signed main(){
+signed main()
+{
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-
-    int t;
-    cin >> t;
-
-    while(t--){
+    int t = 1;
+    /*is Single Test case?*/ cin >> t;
+    while (t--)
+    {
         vivek();
     }
 
+    cerr << "time taken : " << (float)clock() / CLOCKS_PER_SEC << " secs" << endl;
     return 0;
 }
