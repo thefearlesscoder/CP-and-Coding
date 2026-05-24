@@ -1,10 +1,19 @@
 #include <bits/stdc++.h>
+
+#include<ext/pb_ds/assoc_container.hpp>
+#include<ext/pb_ds/tree_policy.hpp>
+
 #define int long long int
 #define Sort(v) sort(v.begin(), v.end())
 #define Sortr(v) sort(v.rbegin(), v.rend())
 #define loop1(i,n) for(int i=0;i<n;i++)
 #define NL cout<<"\n";
+
 using namespace std;
+using namespace __gnu_pbds;
+
+typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds; // find_by_order, order_of_key
+// PBDS usage: refer : https://github.com/Priyansh19077/YouTube-links/blob/main/PBDS.cpp
 // -------------------------------------------------------------------
 int gcd(int a, int b){return b ? gcd(b, a % b) : a;}
 long long power(long long a, long long b, long long mod){long long res = 1;while(b){if(b & 1) res = (res * a) % mod;a = (a * a) % mod;b >>= 1;}return res;}
