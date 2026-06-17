@@ -71,7 +71,29 @@ template <class T, class V> void _print(map <T, V> v) {cerr << "[ "; for (auto i
 
 void vivek()
 {   
-    
+    int n, c;
+    cin >> n >> c;
+
+    vector<int> a(n);
+    loop1(i, n){
+        cin >> a[i];
+    }
+
+    sort(a.begin()+1, a.end());
+
+    int ans = 1;
+    vector<int> pre(n);
+    pre[0] = a[0];
+    for(int i= 1;i<n;i++){
+        pre[i] = pre[i-1] + a[i];
+    }
+
+    for(int i=1;i<n;i++){
+        int val = pre[n-1] - pre[i] + a[0];
+        int cost = val * (pre[i] - a[0]);
+        if(cost <= c)ans = i+1;
+    }
+    cout<<n-ans+1<<endl;
 }
 
 signed main()
