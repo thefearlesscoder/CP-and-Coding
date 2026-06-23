@@ -31,7 +31,23 @@
         "__locale": "cpp",
         "bitset": "cpp",
         "chrono": "cpp"
-    }
+    },
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "ssh": "Disabled",
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3306,
+            "driver": "MySQL",
+            "name": "vivek",
+            "database": "youtube_db",
+            "username": "root"
+        }
+    ]
 }
 
 // @tag:nextEditSuggestions
