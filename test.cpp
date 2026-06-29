@@ -1,97 +1,72 @@
-#include <iostream>
-#include <vector>
-#include <numeric>
-#include <algorithm>
-
+#include <bits/stdc++.h>
 using namespace std;
 
-// DSU (Union-Find) helper to safely handle component connections
-struct DSU {
-    vector<int> parent, rank;
-    DSU(int n) {
-        parent.resize(n + 1);
-        rank.resize(n + 1, 0);
-        iota(parent.begin(), parent.end(), 0);
-    }
+#define int long long
 
-    int find(int i) {
-        if (parent[i] == i)
-            return i;
-        // Path compression
-        return parent[i] = find(parent[i]);
-    }
+void bfs(vector<vector<int>> &adj, vector<int> &dist, int start) {
+    queue<int> q;
 
-    bool unite(int i, int j) {
-        int root_i = find(i);
-        int root_j = find(j);
-        if (root_i != root_j) {
-            // Union by rank to keep trees flat
-            if (rank[root_i] < rank[root_j]) {
-                parent[root_i] = root_j;
-            } else if (rank[root_i] > rank[root_j]) {
-                parent[root_j] = root_i;
-            } else {
-                parent[root_i] = root_j;
-                rank[root_j]++;
+    dist.assign(adj.size(), -1);
+    dist[start] = 0;
+    q.push(start);
+
+    while (!q.empty()) {
+        int node = q.front();
+        q.pop();
+
+        for (auto nxt : adj[node]) {
+            if (dist[nxt] == -1) {
+                dist[nxt] = dist[node] + 1;
+                q.push(nxt);
             }
-            return true;
-        }
-        return false; // Cycle detected
-    }
-};
-
-// The required function to complete
-long long solve(int n, vector<vector<int>>& edges) {
-    long long total_cost = 0;
-    long long msf_cost = 0;
-
-    // 1. Calculate total cost
-    for (const auto& edge : edges) {
-        total_cost += edge[2];
-    }
-
-    // 2. Sort edges descending by cost to find the Maximum Spanning Forest
-    sort(edges.begin(), edges.end(), [](const vector<int>& a, const vector<int>& b) {
-        return a[2] > b[2];
-    });
-
-    // 3. Build the MSF
-    DSU dsu(n);
-    for (const auto& edge : edges) {
-        int u = edge[0];
-        int v = edge[1];
-        long long cost = edge[2];
-
-        if (dsu.unite(u, v)) {
-            msf_cost += cost; // Edge kept
         }
     }
-
-    // 4. The minimum cost to break and add is what's left
-    return total_cost - msf_cost;
 }
 
-// Boilerplate template
 void vivek() {
-    int t;
-    if (cin >> t) {
-        while (t--) {
-            int n;
-            cin >> n;
-            // A tree/forest with n nodes has n-1 edges
-            vector<vector<int>> edges(n - 1, vector<int>(3));
-            for (int i = 0; i < n - 1; i++) {
-                cin >> edges[i][0] >> edges[i][1] >> edges[i][2];
-            }
-            cout << solve(n, edges) << "\n";
+    int n;
+    cin >> n;
+
+    vector<vector<int>> adj(n);
+
+    for (int i = 0; i < n - 1; i++) {
+        int u, v;
+        cin >> u >> v;
+
+        u--;
+        v--;
+
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+
+    // First BFS from any node (0)
+    vector<int> dist;
+    bfs(adj, dist, 0);
+
+    int mx = 0;
+    for (int i = 0; i < n; i++) {
+        if (dist[i] > dist[mx]) {
+            mx = i;
         }
     }
+
+    // Second BFS from farthest node
+    bfs(adj, dist, mx);
+
+    cout << *max_element(dist.begin(), dist.end()) << '\n';
 }
 
-int main() {
-    // Fast I/O
+signed main() {
     ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    vivek();
+    cin.tie(nullptr);
+
+    int t = 1;
+    // cin >> t;
+
+    while (t--) {
+        vivek();
+    }
+
     return 0;
 }
