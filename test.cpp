@@ -1,88 +1,83 @@
+//@memset.DP.-1
 #include <bits/stdc++.h>
 using namespace std;
+using ll = long long;
  
-#define int long long
+//--------------------------------WRITE_HERE-------------------------------------------
  
-void bfs(vector<vector<int>> &adj, vector<int> &dist, int start) {
-    queue<int> q;
+vector<int>g[200000+1];
+vector<int>subtree_size(200000+1);
+vector<ll>cost(200000+1);
+vector<ll>res(200000+1);
  
-    dist.assign(adj.size(), -1);
-    dist[start] = 0;
-    q.push(start);
+void preCalc(int node, int p)
+{   subtree_size[node]=1;
+    cost[node]=0;
  
-    while (!q.empty()) {
-        int node = q.front();
-        q.pop();
- 
-        for (auto nxt : adj[node]) {
-            if (dist[nxt] == -1) {
-                dist[nxt] = dist[node] + 1;
-                q.push(nxt);
-            }
+    for(int &c:g[node]){
+        if(c!=p){
+            preCalc(c,node);
+            subtree_size[node] += subtree_size[c];
+            cost[node] += (cost[c]+subtree_size[c]);
         }
     }
 }
  
-void vivek() {
-    int n;
-    cin >> n;
+void dfs(int node,int p){
+    res[node]=cost[node];
  
-    vector<vector<int>> adj(n);
+    for(int &c:g[node]){
+        if(c!=p){
+            cost[node] -= (cost[c]+subtree_size[c]);
+            subtree_size[node] -= subtree_size[c];
  
-    for (int i = 0; i < n - 1; i++) {
-        int u, v;
-        cin >> u >> v;
+            cost[c] += (cost[node]+subtree_size[node]);
+            subtree_size[c] += subtree_size[node];
  
-        u--;
-        v--;
+            dfs(c, node);
  
-        adj[u].push_back(v);
-        adj[v].push_back(u);
-    }
+            cost[c] -= (cost[node] + subtree_size[node]);
+            subtree_size[c] -= subtree_size[node];
  
-    // First BFS from any node (0)
-    vector<int> dist;
-    bfs(adj, dist, 0);
-
-    
- 
-    int mx = 0;
-    for (int i = 0; i < n; i++) {
-        if (dist[i] > dist[mx]) {
-            mx = i;
+            cost[node] += (cost[c] + subtree_size[c]);
+            subtree_size[node] += subtree_size[c];
         }
     }
-    
-    int fist_FN = mx;
-    // Second BFS from farthest node
-    bfs(adj, dist, mx);
-
-    int sec_FN = 0;
-    for (int i = 0; i < n; i++) {
-        if (dist[i] > dist[sec_FN]) {
-            sec_FN = i;
-        }
-    }
-
-    vector<int> dist2;
-    bfs(adj, dist2, sec_FN);
-
-    for(int i = 0;i<n;i++){
-        cout<<max(dist[i], dist2[i])<<" ";
-    }
-    cout<<"\n";
 }
  
-signed main() {
+void _144()
+{
+    int n;cin>>n;
+ 
+    for(int i=0;i<n-1;i++){
+        int a,b;cin>>a>>b;
+        g[a].push_back(b);
+        g[b].push_back(a);
+    }
+ 
+    preCalc(1,-1);
+    dfs(1,-1);
+ 
+    for(int i=1;i<=n;i++) cout<<res[i]<<" ";
+    return;
+}
+ 
+//--------------------------------END--------------------------------------------------
+ 
+// Main
+int main()
+{
+//freopen("input.in", "r",stdin);
+//freopen("output.out", "w",stdout);
+ 
     ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
+    cin.tie(NULL);
+    cout.tie(NULL);
  
-    int t = 1;
+    ll t = 1;
     // cin >> t;
- 
-    while (t--) {
-        vivek();
+    while (t--)
+    {
+        _144();
     }
- 
-    return 0;
 }
